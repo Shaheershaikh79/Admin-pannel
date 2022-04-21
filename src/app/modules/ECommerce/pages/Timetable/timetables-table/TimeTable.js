@@ -7,7 +7,7 @@ import paginationFactory, {
   PaginationProvider,
 } from "react-bootstrap-table2-paginator";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import * as actions from "../../../_redux/customers/customersActions";
+import * as actions from "../../../_redux/Timetable/TimeActions";
 import {
   getHandlerTableChange,
   NoRecordsFoundMessage,
@@ -20,7 +20,7 @@ import * as columnFormatters from "./column-formatters";
 import { Pagination } from "../../../../../../_metronic/_partials/controls";
 import { useTimetablesUIContext } from "../TimetableUIContext";
 
-export function CustomersTable() {
+export function TimeTables() {
   // Customers UI Context
   const timetableUIContext = useTimetablesUIContext();
   const customersUIProps = useMemo(() => {
@@ -54,6 +54,14 @@ export function CustomersTable() {
   // }, [customersUIProps.queryParams, dispatch]);
 
   // Table columns
+
+    const dispatch = useDispatch();
+    console.log(customersUIProps.queryParams,"here is query")
+
+    useEffect(()=>{
+      dispatch(actions.fetchtimeTables(customersUIProps.queryParams))
+    },[customersUIProps.queryParams,dispatch])
+
   const columns = [
     {
       dataField: "id",

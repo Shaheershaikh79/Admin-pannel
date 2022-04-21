@@ -7,7 +7,6 @@ import {
 } from "../../TimetableUIHelpers.js";
 
 export function StatusColumnFormatter(cellContent, row) {
-  console.log(row, "here is row");
 
   const getLabelCssClasses = () => {
     return `label label-lg label-light-${

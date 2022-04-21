@@ -9,7 +9,7 @@ import {
 import { useTimetablesUIContext } from "./TimetableUIContext";
 import { TimetableFilter } from "./timetable-filter/TimetablesFilter";
 // import { CustomersGrouping } from "../customers/customers-grouping/CustomersGrouping";
-import { CustomersTable } from "./customers-table/CustomersTable";
+import { TimeTables } from "./timetables-table/TimeTable";
 
 export function TimetableCard() {
   const timetableUIContext = useTimetablesUIContext();
@@ -37,7 +37,7 @@ export function TimetableCard() {
       <CardBody>
         <TimetableFilter />
         {/* {timetableUIProps.ids.length > 0 && <CustomersGrouping />} */}
-        <CustomersTable />
+        <TimeTables />
       </CardBody>
     </Card>
   );
