@@ -3,6 +3,7 @@ import timeTableMockdata from "./timetabledataMock";
 export default function mockTimetable(mock) {
   mock.onPost("api/timetable").reply(({ data }) => {
     const { timetable } = JSON.parse(data);
+
     const {
       firstName = "",
       lastName = "",
@@ -26,7 +27,7 @@ export default function mockTimetable(mock) {
     };
 
     timeTableMockdata.push(newTimetable);
-    return [200, { Timetable: newTimetable }];
+    return [200, { timetable: newTimetable }];
   });
 }
 function generateUserId() {

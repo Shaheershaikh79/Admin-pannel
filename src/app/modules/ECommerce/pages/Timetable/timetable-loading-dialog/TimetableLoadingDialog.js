@@ -5,7 +5,7 @@ import { LoadingDialog } from "../../../../../../_metronic/_partials/controls";
 export function TimetableLoadingDialog() {
   // Customers Redux state
   const { isLoading } = useSelector(
-    (state) => ({ isLoading: state.customers.listLoading }),
+    (state) => ({ isLoading: state.Timetables.listLoading }),
     shallowEqual
   );
   // looking for loading/dispatch

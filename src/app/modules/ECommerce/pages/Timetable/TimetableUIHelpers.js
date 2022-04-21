@@ -1,7 +1,8 @@
 export const TimetableStatusCssClasses = ["success", "info", ""];
 export const TimetableStatusTitles = ["Selling", "Sold"];
-export const TimetableConditionCssClasses = ["success", "danger", ""];
-export const TimetableConditionTitles = ["New", "Used"];
+export const TimetableTypeCssClasses = ["success", "primary", ""];
+export const TimetableTypeTitles = ["Business", "Individual", ""];
+export const TimetableTimetableConditionTitles = ["New", "Used"];
 export const defaultSorted = [{ dataField: "id", order: "asc" }];
 export const sizePerPageList = [
   { text: "3", value: 3 },

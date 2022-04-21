@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialTimetableList = {
-  entities: null,
+  entities: [],
   error: null,
   listLoading: false,
   actionsLoading: false,

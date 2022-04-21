@@ -11,6 +11,7 @@ export const createTimetable = (timetableForCreation) => (dispatch) => {
 
     .then((response) => {
       const { timetable } = response.data;
+      console.log(response, "rep");
       dispatch(actions.timeTableCreated({ timetable }));
     })
     .catch((error) => {

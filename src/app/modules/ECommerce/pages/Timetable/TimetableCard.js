@@ -6,11 +6,10 @@ import {
   CardHeaderToolbar,
 } from "../../../../../_metronic/_partials/controls";
 
-// import { CustomersFilter } from "./customers-filter/CustomersFilter";
-// import { CustomersTable } from "./customers-table/CustomersTable";
-// import { CustomersGrouping } from "./customers-grouping/CustomersGrouping";
 import { useTimetablesUIContext } from "./TimetableUIContext";
 import { TimetableFilter } from "./timetable-filter/TimetablesFilter";
+// import { CustomersGrouping } from "../customers/customers-grouping/CustomersGrouping";
+import { CustomersTable } from "./customers-table/CustomersTable";
 
 export function TimetableCard() {
   const timetableUIContext = useTimetablesUIContext();
@@ -37,8 +36,8 @@ export function TimetableCard() {
       </CardHeader>
       <CardBody>
         <TimetableFilter />
-        {/* {customersUIProps.ids.length > 0 && <CustomersGrouping />} */}
-        {/* <CustomersTable /> */}
+        {/* {timetableUIProps.ids.length > 0 && <CustomersGrouping />} */}
+        <CustomersTable />
       </CardBody>
     </Card>
   );

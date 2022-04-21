@@ -17,6 +17,7 @@ export default function mockCustomer(mock) {
     } = customer;
 
     const id = generateUserId();
+
     const newCustomer = {
       id,
       firstName,
