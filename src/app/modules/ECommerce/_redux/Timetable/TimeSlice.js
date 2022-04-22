@@ -17,7 +17,6 @@ export const timeTableSlice = createSlice({
 
   reducers: {
     catchError: (state, action) => {
-
       state.error = `${action.type}: ${action.payload.error}`;
       if (action.payload.callType === callTypes.list) {
         state.listLoading = false;
@@ -40,20 +39,21 @@ export const timeTableSlice = createSlice({
       state.entities.push(action.payload.timetable);
     },
 
-
     timeTablesFetched: (state, action) => {
-      console.log(action,"here is data")
-      const { totalCount, entities } = action.payload
+      const { totalCount, entities } = action.payload;
       state.listLoading = false;
       state.error = null;
       state.entities = entities;
       state.totalCount = totalCount;
     },
 
-
-
-
-
-
+    timetableDeleted: (state, action) => {
+      // console.log(action.payload, "final stage");
+      state.error = null;
+      state.actionsLoading = false;
+      state.entities = state.entities.filter(
+        (el) => el.id !== action.payload.id
+      );
+    },
   },
 });

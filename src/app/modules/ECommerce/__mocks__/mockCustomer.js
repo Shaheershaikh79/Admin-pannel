@@ -89,6 +89,7 @@ export default function mockCustomer(mock) {
   });
 
   mock.onDelete(/api\/customers\/\d+/).reply((config) => {
+    console.log("inside mock");
     const id = config.url.match(/api\/customers\/(\d+)/)[1];
     const index = customerTableMock.findIndex((el) => el.id === +id);
     customerTableMock.splice(index, 1);

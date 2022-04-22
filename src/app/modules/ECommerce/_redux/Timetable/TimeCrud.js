@@ -9,6 +9,9 @@ export function createTimetable(timetable) {
 }
 
 export function findtimeTables(queryParams) {
-  console.log("here is server",queryParams)
   return axios.post(`${CUSTOMERS_URL}/find`, { queryParams });
+}
+export function deletetimetable(customerId) {
+  console.log("at axios", customerId);
+  return axios.delete(`${CUSTOMERS_URL}/${customerId}`);
 }

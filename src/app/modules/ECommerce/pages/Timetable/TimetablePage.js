@@ -5,6 +5,7 @@ import { Route } from "react-router-dom";
 // import { CustomersDeleteDialog } from "./customers-delete-dialog/CustomersDeleteDialog";
 // import { CustomersFetchDialog } from "./customers-fetch-dialog/CustomersFetchDialog";
 // import { CustomersUpdateStateDialog } from "./customers-update-status-dialog/CustomersUpdateStateDialog";
+import { TimetableDeleteDialog } from "./timetable-delete-dialog/TimetableDeleteDialog";
 import { TimetableUIProvider } from "./TimetableUIContext";
 import { TimetableCard } from "./TimetableCard";
 import { TimetableLoadingDialog } from "./timetable-loading-dialog/TimetableLoadingDialog";
@@ -45,6 +46,30 @@ export function Timetable({ history }) {
           />
         )}
       </Route>
+
+      <Route path="/e-commerce/timetable/:id/delete">
+        {({ history, match }) => (
+          <TimetableDeleteDialog
+            show={match != null}
+            id={match && match.params.id}
+            onHide={() => {
+              history.push("/e-commerce/timetable");
+            }}
+          />
+        )}
+      </Route>
+
+      {/* <Route path="/e-commerce/timetable/deleteCustomers">
+        {({ history, match }) => (
+          <TimetableDeleteDialog
+            show={match != null}
+            onHide={() => {
+              history.push("/e-commerce/timtable");
+            }}
+          />
+        )}
+      </Route> */}
+
       {/* 
 
       <Route path="/e-commerce/customers/:id/edit">
@@ -58,28 +83,8 @@ export function Timetable({ history }) {
           />
         )}
       </Route>
-      <Route path="/e-commerce/customers/deleteCustomers">
-        {({ history, match }) => (
-          <CustomersDeleteDialog
-            show={match != null}
-            onHide={() => {
-              history.push("/e-commerce/customers");
-            }}
-          />
-        )}
-      </Route>
 
-      <Route path="/e-commerce/customers/:id/delete">
-        {({ history, match }) => (
-          <CustomerDeleteDialog
-            show={match != null}
-            id={match && match.params.id}
-            onHide={() => {
-              history.push("/e-commerce/customers");
-            }}
-          />
-        )}
-      </Route>
+      
 
       <Route path="/e-commerce/customers/fetch">
         {({ history, match }) => (

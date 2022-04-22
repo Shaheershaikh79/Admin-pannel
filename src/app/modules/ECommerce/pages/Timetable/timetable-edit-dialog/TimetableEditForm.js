@@ -38,6 +38,7 @@ export function TimetableEditForm({
   actionsLoading,
   onHide,
 }) {
+  console.log(timetable, "data gone");
   return (
     <>
       <Formik

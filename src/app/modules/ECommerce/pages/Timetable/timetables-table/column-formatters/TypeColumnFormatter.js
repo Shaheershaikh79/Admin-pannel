@@ -7,7 +7,6 @@ import {
 } from "../../TimetableUIHelpers.js";
 
 export function TypeColumnFormatter(cellContent, row) {
-  console.log("row", row);
   return (
     <>
       <span

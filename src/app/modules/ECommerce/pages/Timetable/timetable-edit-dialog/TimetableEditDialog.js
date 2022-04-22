@@ -44,8 +44,6 @@ export function TimetableEditDialog({ id, show, onHide }) {
     // console.log("here is values in main component", timetable);\
 
     dispatch(actions.createTimetable(timetable)).then(() => onHide());
-
-    console.log("called in ,main", timetable);
   };
   return (
     <Modal

@@ -1,7 +1,7 @@
 // React bootstrap table next =>
 // DOCS: https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/
 // STORYBOOK: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory, {
   PaginationProvider,
@@ -14,6 +14,7 @@ import {
   PleaseWaitMessage,
   sortCaret,
   headerSortingClasses,
+  getSelectRow,
 } from "../../../../../../_metronic/_helpers";
 import * as uiHelpers from "../TimetableUIHelpers";
 import * as columnFormatters from "./column-formatters";
@@ -23,16 +24,18 @@ import { useTimetablesUIContext } from "../TimetableUIContext";
 export function TimeTables() {
   // Customers UI Context
   const timetableUIContext = useTimetablesUIContext();
-  const customersUIProps = useMemo(() => {
+  const timetablesUIProps = useMemo(() => {
     return {
       ids: timetableUIContext.ids,
       setIds: timetableUIContext.setIds,
       queryParams: timetableUIContext.queryParams,
       setQueryParams: timetableUIContext.setQueryParams,
       openEditCustomerDialog: timetableUIContext.openEditCustomerDialog,
-      openDeleteCustomerDialog: timetableUIContext.openDeleteCustomerDialog,
+      openDeleteTimetableDialog: timetableUIContext.openDeleteTimetableDialog,
     };
   }, [timetableUIContext]);
+
+  // const currentState
 
   // Getting curret state of customers list from store (Redux)
   // const { currentState } = useSelector(
@@ -54,13 +57,22 @@ export function TimeTables() {
   // }, [customersUIProps.queryParams, dispatch]);
 
   // Table columns
+  const { currentState } = useSelector(
+    (state) => ({ currentState: state.Timetables }),
+    shallowEqual
+  );
 
-    const dispatch = useDispatch();
-    console.log(customersUIProps.queryParams,"here is query")
+  const entities = currentState.entities;
+  const totalCount = currentState.totalCount;
+  const listLoading = useState.listLoading;
 
-    useEffect(()=>{
-      dispatch(actions.fetchtimeTables(customersUIProps.queryParams))
-    },[customersUIProps.queryParams,dispatch])
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(actions.fetchtimeTables(timetablesUIProps.queryParams));
+  }, [timetablesUIProps.queryParams, dispatch]);
+
+  console.log("QP", timetablesUIProps.queryParams);
 
   const columns = [
     {
@@ -92,8 +104,14 @@ export function TimeTables() {
       headerSortingClasses,
     },
     {
-      dataField: "gender",
+      dataField: "Gender",
       text: "Gender",
+      sort: false,
+      sortCaret: sortCaret,
+    },
+    {
+      dataField: "subject",
+      text: "Subject",
       sort: false,
       sortCaret: sortCaret,
     },
@@ -112,37 +130,38 @@ export function TimeTables() {
       sortCaret: sortCaret,
       formatter: columnFormatters.TypeColumnFormatter,
     },
-    // {
-    //   dataField: "action",
-    //   text: "Actions",
-    //   formatter: columnFormatters.ActionsColumnFormatter,
-    //   formatExtraData: {
-    //     openEditCustomerDialog: customersUIProps.openEditCustomerDialog,
-    //     openDeleteCustomerDialog: customersUIProps.openDeleteCustomerDialog,
-    //   },
-    //   classes: "text-right pr-0",
-    //   headerClasses: "text-right pr-3",
-    //   style: {
-    //     minWidth: "100px",
-    //   },
-    // },
+    {
+      dataField: "action",
+      text: "Actions",
+      formatter: columnFormatters.ActionsColumnFormatter,
+      formatExtraData: {
+        openEditCustomerDialog: timetablesUIProps.openEditCustomerDialog,
+        openDeleteTimetableDialog: timetablesUIProps.openDeleteTimetableDialog,
+      },
+      classes: "text-right pr-0",
+      headerClasses: "text-right pr-3",
+      style: {
+        minWidth: "100px",
+      },
+    },
   ];
   // Table pagination properties
   const paginationOptions = {
     custom: true,
-    totalCount: 10,
-    totalSize: 100,
-
+    pageSize: totalCount,
     sizePerPageList: uiHelpers.sizePerPageList,
-    sizePerPage: customersUIProps.queryParams.pageSize,
-    page: customersUIProps.queryParams.pageNumber,
+    sizePerPage: timetablesUIProps.queryParams.pageSize,
+    page: timetablesUIProps.queryParams.pageNumber,
   };
   return (
     <>
       <PaginationProvider pagination={paginationFactory(paginationOptions)}>
         {({ paginationProps, paginationTableProps }) => {
           return (
-            <Pagination isLoading={false} paginationProps={paginationProps}>
+            <Pagination
+              isLoading={listLoading}
+              paginationProps={paginationProps}
+            >
               <BootstrapTable
                 wrapperClasses="table-responsive"
                 bordered={false}
@@ -151,48 +170,21 @@ export function TimeTables() {
                 remote
                 keyField="id"
                 // data={entities === null ? [] : entities}
-                data={[
-                  {
-                    id: 1,
-                    firstName: "shaheer",
-                    lastName: "shaikh",
-                    email: "shaheershaikh79@gmail.com",
-                    gender: "male",
-                    status: "1",
-                  },
-                  {
-                    id: 2,
-                    firstName: "shaheer",
-                    lastName: "shaikh",
-                    email: "shaheershaikh79@gmail.com",
-                    gender: "male",
-                    status: 0,
-                    type: 1,
-                  },
-                  {
-                    id: 3,
-                    firstName: "shaheer",
-                    lastName: "shaikh",
-                    email: "shaheershaikh79@gmail.com",
-                    gender: "male",
-                    status: 0,
-                    type: 1,
-                  },
-                ]}
+                data={entities === 0 ? [] : entities}
                 columns={columns}
                 defaultSorted={uiHelpers.defaultSorted}
                 onTableChange={getHandlerTableChange(
-                  customersUIProps.setQueryParams
+                  timetablesUIProps.setQueryParams
                 )}
-                // selectRow={getSelectRow({
-                //   entities,
-                //   ids: customersUIProps.ids,
-                //   setIds: customersUIProps.setIds,
-                // })}
+                selectRow={getSelectRow({
+                  entities,
+                  ids: timetablesUIProps.ids,
+                  setIds: timetablesUIProps.setIds,
+                })}
                 {...paginationTableProps}
               >
-                <PleaseWaitMessage entities={[]} />
-                <NoRecordsFoundMessage entities={[]} />
+                <PleaseWaitMessage entities={entities} />
+                <NoRecordsFoundMessage entities={entities} />
               </BootstrapTable>
             </Pagination>
           );
