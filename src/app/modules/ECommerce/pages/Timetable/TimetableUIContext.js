@@ -29,8 +29,8 @@ export function TimetableUIProvider({ TimetableUIEvents, children }) {
 
   const initTimetable = {
     id: undefined,
-    firstName: "",
-    lastName: "",
+    frstName: "",
+    lastiName: "",
     email: "",
     status: 0,
     dateOfBbirth: "",
